@@ -1,0 +1,53 @@
+EMAIL SPAM DETECTION USING MACHINE LEARNING - RESULTS
+======================================================
+Project : AI Mini Project (Artificial Intelligence, Semester 5)
+Author  : Aman Raj (Enrollment No. 92400103185, Class 5EC5)
+          Department of Computer Engineering, Marwadi University
+Code    : spam_detection.py (run on 17 November 2026)
+
+DATASET
+------------------------------------------------------
+Name        : SMS Spam Collection
+Source      : UCI Machine Learning Repository (dataset 228)
+Link        : https://archive.ics.uci.edu/dataset/228/sms+spam+collection
+File used   : SMSSpamCollection (downloaded from the UCI zip archive)
+
+Total messages : 5,572
+Ham (legitimate): 4,825  (86.59%)
+Spam            : 747    (13.41%)
+
+EXPERIMENT SETUP
+------------------------------------------------------
+Preprocessing   : lowercasing, removal of digits/punctuation, whitespace cleanup
+Features        : TF-IDF (English stop words removed, unigrams + bigrams)
+TF-IDF features : 29,241
+Train/test split: 4,457 train / 1,115 test (80/20, stratified, random_state = 42)
+Test set        : 966 ham + 149 spam
+
+RESULTS (metrics are for the spam class; accuracy is overall)
+------------------------------------------------------
+Multinomial Naive Bayes
+  Accuracy  : 0.9623  (96.23%)
+  Precision : 1.0000  (100.00%)
+  Recall    : 0.7181  (71.81%)
+  F1-score  : 0.8359
+  Confusion matrix [[TN, FP], [FN, TP]] = [[966, 0], [42, 107]]
+
+Logistic Regression (solver = liblinear, max_iter = 1000)
+  Accuracy  : 0.9641  (96.41%)
+  Precision : 1.0000  (100.00%)
+  Recall    : 0.7315  (73.15%)
+  F1-score  : 0.8450
+  Confusion matrix [[TN, FP], [FN, TP]] = [[966, 0], [40, 109]]
+
+CONCLUSION
+------------------------------------------------------
+Logistic Regression performed slightly better than Multinomial Naive
+Bayes on this dataset: higher accuracy (96.41% vs 96.23%), higher recall
+(73.15% vs 71.81%) and a higher F1-score (0.8450 vs 0.8359). Both models
+achieved perfect precision (1.0000) - neither model wrongly flagged a
+single legitimate (ham) message as spam. The main source of error for
+both models is missed spam messages (false negatives: 40 for Logistic
+Regression, 42 for Naive Bayes), which is expected because the dataset
+is imbalanced (only 13.41% spam) and short spam messages often look
+similar to genuine messages.
